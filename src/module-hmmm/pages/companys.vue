@@ -170,7 +170,6 @@
 </template>
 
 <script>
-import { companyManagementApi } from "@/api/companyManagement";
 export default {
   data() {
     return {
@@ -210,18 +209,11 @@ export default {
     };
   },
 
-  created() {
-    this.companyManagement();
-  },
+  created() {},
 
   methods: {
     rowStyle() {
       return "text-align:center";
-    },
-    async companyManagement() {
-      console.log(companyManagementApi);
-      const res = await companyManagementApi(this.form);
-      console.log(res);
     },
   },
 };
