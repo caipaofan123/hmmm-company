@@ -13,7 +13,7 @@
   </div>
 </template>
 <script>
-export default {
+export default {   
   name: 'PageTool',
   props: ['total', 'paginationPage', 'paginationPagesize'],
   data () {
