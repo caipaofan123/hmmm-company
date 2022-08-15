@@ -107,6 +107,7 @@ export default {
     },
     // 选省获取到市
     handleProvince: function (e) {
+      console.log(e)
       this.citySelect.cityDate = citys(e)
       this.formBase.city = this.citySelect.cityDate[0]
     },
