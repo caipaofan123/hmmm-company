@@ -89,7 +89,7 @@
             width="198"
             align="center"
           >
-            <template slot-scope="scope">
+            <template>
               <el-button size="medium" type="text">预览</el-button>
               <el-button size="medium" type="text">禁用</el-button>
               <el-button size="medium" type="text" disabled>修改</el-button>
