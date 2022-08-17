@@ -7,15 +7,15 @@
           <el-col :span="16">
             <el-row type="flex" justify="start">
               <slot name="input2" ></slot>
-              <el-button size="small" >清除</el-button>
-              <el-button type="primary" size="small" >搜索</el-button>
+              <el-button size="small" @click="clear">清除</el-button>
+              <el-button type="primary" size="small" @click="search">搜索</el-button>
             </el-row>
           </el-col>
         </el-row>
       </el-col>
       <el-col :span="8">
         <el-row type="flex" justify="end">
-          <newButton :text="text"></newButton>
+          <newButton :text="text" @click.native="add"></newButton>
         </el-row>
       </el-col>
     </el-row>
@@ -27,7 +27,7 @@ import newButton from "@/common/newButton";
 export default {
   data() {
     return {
-        form
+        form:{}
     };
   },
   props: {
@@ -41,7 +41,17 @@ export default {
   },
   created() {},
 
-  methods: {},
+  methods: {
+    search(){
+      this.$emit('search')
+    },
+    clear(){
+      this.$emit('clear')
+    },
+    add(){
+      this.$emit('add')
+    }
+  },
 };
 </script>
 
