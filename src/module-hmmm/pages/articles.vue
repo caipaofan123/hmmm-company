@@ -74,6 +74,7 @@
                 href="#"
                 class="el-icon-film"
                 style="color: #00f; font-size: 18px"
+                @click="videoBtn(scope)"
               ></a>
             </template>
           </el-table-column>
@@ -161,6 +162,7 @@
         >
         </el-pagination>
       </el-card>
+      <!-- 文章预览弹框 -->
       <el-dialog title="预览文章" :visible.sync="previewDialog" width="50%">
         <div>
           <div class="title">
@@ -175,11 +177,13 @@
           <div class="content" v-html="articleBody"></div>
         </div>
       </el-dialog>
+      <!-- 新增、修改弹框 -->
       <el-dialog
         :title="articleTitle"
         :visible.sync="addDialog"
         width="50%"
         ref="articleDialog"
+        @close="onCancel"
       >
         <el-form
           label-width="80px"
@@ -194,24 +198,18 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="文章内容:" prop="content" label-width="120px">
-            <quill-editor
-              ref="myQuillEditor"
+            <Editor
+              v-if="addDialog"
               v-model="articleForm.content"
-              :options="editorOption"
-              @blur="onEditorBlur($event)"
-              @focus="onEditorFocus($event)"
-              @ready="onEditorReady($event)"
-            >
-            </quill-editor>
+              @blur="blur"
+              @input="input"
+              ref="EditorOne"
+            ></Editor>
           </el-form-item>
-          <el-form-item
-            label="视频地址:"
-            prop="editorVideoAddress"
-            label-width="120px"
-          >
+          <el-form-item label="视频地址:" prop="videoURL" label-width="120px">
             <el-input
               placeholder="请输入视频地址"
-              v-model="articleForm.editorVideoAddress"
+              v-model="articleForm.videoURL"
             ></el-input>
           </el-form-item>
         </el-form>
@@ -219,6 +217,18 @@
           <el-button @click="onCancel">取 消</el-button>
           <el-button type="primary" @click="onConfirm">确 定</el-button>
         </span>
+      </el-dialog>
+      <!-- 视频弹框 -->
+      <el-dialog title="视频预览" :visible.sync="videoDialog" width="30%">
+        <meta name="referrer" content="no-referrer" />
+        <video
+          :src="videoAddr"
+          type="video/mp4"
+          width="100%"
+          controls
+          autoplay
+          muted
+        ></video>
       </el-dialog>
     </div>
   </div>
@@ -234,10 +244,7 @@ import {
   updateApi,
 } from "@/api/hmmm/articles";
 import { status } from "@/api/hmmm/constants";
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
-import "quill/dist/quill.bubble.css";
-import { quillEditor } from "vue-quill-editor";
+import Editor from "../components/Editor.vue";
 
 export default {
   data() {
@@ -251,9 +258,10 @@ export default {
         keyword: null,
         state: null,
       },
-      status: [],
+      status: [], // 状态
       previewDialog: false,
       addDialog: false,
+      videoDialog: false, //弹框
       title: "",
       visits: "",
       username: "",
@@ -271,10 +279,12 @@ export default {
           ],
         },
       },
+      articleId: null,
       articleForm: {
         title: null,
-        content: null,
-        editorVideoAddress: null,
+        articleBody: null,
+        videoURL: null,
+        id: null,
       },
       articleTitle: "",
       articleRules: {
@@ -283,13 +293,16 @@ export default {
           { required: true, message: "请输入文章内容", trigger: "blur" },
         ],
       },
+      videoAddr: "", //视频地址
+      editorIndex: 1,
+      value: "", // 富文本
     };
   },
   created() {
     this.list();
   },
   components: {
-    quillEditor,
+    Editor,
   },
   methods: {
     async list() {
@@ -349,29 +362,10 @@ export default {
     async changeState(scope) {
       const data = {
         id: scope.row.id,
-        state: scope.row.state,
+        state: scope.row.state ? (scope.row.state = 0) : (scope.row.state = 1),
       };
-      const {
-        data: { success },
-      } = await changeStateApi(data);
-      console.log(success);
-      if (success) {
-        if (scope.row.state === 1) {
-          console.log(this.tableData);
-          scope.row.state = 0;
-          scope.row.cnState = "已禁用";
-        } else {
-          console.log(this.tableData);
-          scope.row.state = 1;
-          scope.row.cnState = "已启用";
-        }
-        this.$message({
-          message: "操作成功",
-          type: "success",
-        });
-      } else {
-        this.$message.error("操作失败");
-      }
+      await changeStateApi(data);
+      this.list();
     },
     editArticle(scope) {
       this.articleId = scope.row.id;
@@ -379,8 +373,9 @@ export default {
       this.addDialog = true;
       this.articleTitle = "修改文章";
       this.articleForm.title = scope.row.title;
-      this.articleForm.content = scope.row.articleBody;
-      this.articleForm.editorVideoAddress = scope.row.videoURL;
+      this.articleForm.articleBody = scope.row.articleBody;
+      this.articleForm.videoURL = scope.row.videoURL;
+      this.value = scope.row.articleBody;
     },
     async removeBtn(scope) {
       this.$confirm("此操作将永久删除该文章, 是否继续?", "提示", {
@@ -419,43 +414,42 @@ export default {
       this.page = page;
       this.list();
     },
-    onEditorChange({ quill, html, text }) {
-      console.log("editor change!", quill, html, text);
-      this.content = html;
-    },
-    onEditorBlur() {},
-    onEditorFocus() {},
-    onEditorReady() {},
     async onConfirm() {
-      this.addDialog = false;
-      const data = {
-        title: this.articleForm.title,
-        articleBody: this.articleForm.content,
-        videoURL: this.articleForm.editorVideoAddress,
-        id: this.articleId,
-      };
-      const datas = {
-        title: this.articleForm.title,
-        articleBody: this.articleForm.content,
-        videoURL: this.articleForm.editorVideoAddress,
-        id: null,
-      };
+      this.articleForm.id = this.articleId;
+      const data = this.articleForm;
       if (this.articleId) {
         const res = await updateApi(data);
         console.log(res);
       } else {
-        const res = await addApi(datas);
+        const res = await addApi(data);
         console.log(res);
       }
+      this.articleId = null;
+      this.$refs.articleForm.resetFields(); // 清除表单内容
+      this.$refs.EditorOne.deleteText(); //清除富文本编辑器内容
 
+      this.addDialog = false;
       this.list();
-      this.$refs.articleForm.resetFields();
-      this.articleId = "";
     },
     onCancel() {
-      this.addDialog = false;
+      this.articleId = null;
       this.$refs.articleForm.resetFields();
-      this.articleId = "";
+      this.$refs.EditorOne.deleteText(); //清除富文本编辑器内容
+
+      this.addDialog = false;
+    },
+    videoBtn(scope) {
+      this.videoDialog = true;
+      this.videoAddr = scope.row.videoURL;
+      console.log(scope);
+    },
+    input(val) {
+      console.log(val);
+      this.value = val;
+      this.articleForm.articleBody = val;
+    },
+    blur() {
+      this.$refs.articleForm.validateField("content");
     },
   },
 };

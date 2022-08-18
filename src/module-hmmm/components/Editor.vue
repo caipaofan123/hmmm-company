@@ -78,7 +78,7 @@ export default {
     httpRequest({ file }) {
       cos.putObject(
         {
-          Bucket: "bianling-1313341649" /* 必须 */,
+          Bucket: "heima-31-1313341705" /* 必须 */,
           Region: "ap-shanghai" /* 存储桶所在地域，必须字段 */,
           Key: file.name /* 必须 */,
           StorageClass: "STANDARD",
@@ -101,7 +101,6 @@ export default {
         }
       );
     },
-
     //清除内容
     deleteText() {
       const quill = this.$refs.myQuillEditor.quill;
@@ -115,9 +114,13 @@ export default {
 
     //上传图片之前的处理
     beforeAvatarUpload(file) {
-      const isJPG = ["image/jpeg", "image/png", "image/gif"].includes(
-        file.type
-      );
+      console.log(file);
+      const isJPG = [
+        "image/jpeg",
+        "image/png",
+        "image/gif",
+        "image/webp",
+      ].includes(file.type);
 
       const isLt2M = file.size / 1024 / 1024 < 2;
 
