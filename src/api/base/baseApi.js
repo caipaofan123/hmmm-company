@@ -29,15 +29,16 @@ export default {
   question: [
     {
       id: '1',
-      value: '多选'
+      value: '单选'
     },
     {
       id: '2',
-      value: '单选'
+      value: '多选'
     },
     {
       id: '3',
       value: '简答'
     }
-  ]
+  ],
+
 }
