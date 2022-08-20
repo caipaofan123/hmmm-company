@@ -44,7 +44,7 @@
               class="delete"
               icon="el-icon-delete"
               circle
-              @click="del(row.id)"
+              @click="del(row)"
             ></el-button>
           </template>
         </el-table-column>
