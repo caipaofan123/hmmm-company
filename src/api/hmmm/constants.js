@@ -4,9 +4,9 @@
  * @Last Modified by: taoshiwei
  * @Last Modified time: 2019-04-29 10:57:59
  *
- * 通用常量
- */
-
+ * 通用常量  
+ */  
+     
 // 状态
 export const status = [
   {
@@ -18,6 +18,11 @@ export const status = [
     label: '禁用'
   }
 ]
+
+export const statusNum = {
+    "1":"启用",
+    "0":"禁用"
+};
 
 // 难度
 export const difficulty = [
