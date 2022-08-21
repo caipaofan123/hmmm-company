@@ -57,12 +57,12 @@
         @pageSizeChange="pageSizeChange"
       ></PageTool>
     </el-card>
-    <menuadd ref="menuadd" :text="text" :pageTitle="pageTitle" />
+    <UserAdd></UserAdd>
   </div>
 </template>
 
 <script>
-import menuadd from "../components/menu-add.vue";
+import UserAdd from "../components/user-add.vue";
 import PageTool from "../components/page-tool.vue";
 import { list, remove } from "@/api/base/users.js";
 export default {
@@ -73,16 +73,12 @@ export default {
       total: 0,
       page: 1,
       pagesize: 10,
-      keyword: null,
-      text: "创建用户",
-      pageTitle: "",
-      PermissionGroupsList: {},
       loading: false,
     };
   },
   components: {
     PageTool,
-    menuadd,
+    UserAdd,
   },
   created() {
     this.getList();
@@ -91,7 +87,7 @@ export default {
   methods: {
     //弹窗
     onAdduser() {
-      this.$refs.menuadd.dialogFormVisible();
+      // this.$refs.menuadd.dialogFormVisible();
     },
     //渲染表格
     async getList() {
@@ -99,7 +95,6 @@ export default {
       const res = await list({
         page: this.page,
         pagesize: this.pagesize,
-        keyword: this.keyword,
       });
       // console.log(res);
       this.tableData = res.data.list;
@@ -115,7 +110,7 @@ export default {
     async search() {
       this.loading = true;
       const { data } = await list({
-        page: 1,
+        page: this.page,
         pagesize: this.pagesize,
         username: this.input,
       });
@@ -131,7 +126,7 @@ export default {
     //当前页尺寸
     pageSizeChange(pageSize) {
       this.pagesize = pageSize;
-      console.log(this.total);
+      // console.log(this.total);
       if (this.total > pageSize) this.getList();
     },
     //删除
