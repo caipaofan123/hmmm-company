@@ -197,14 +197,22 @@
               v-model="articleForm.title"
             ></el-input>
           </el-form-item>
-          <el-form-item label="文章内容:" prop="content" label-width="120px">
-            <quillEditor
+
+          <el-form-item
+            label="文章内容:"
+            prop="articleBody"
+            label-width="120px"
+          >
+            <quill-editor
+
               v-if="addDialog"
-              v-model="articleForm.content"
+              v-model="articleForm.articleBody"
               @blur="blur"
               @input="input"
               ref="EditorOne"
-            ></quillEditor>
+
+            ></quill-editor>
+
           </el-form-item>
           <el-form-item label="视频地址:" prop="videoURL" label-width="120px">
             <el-input
@@ -269,16 +277,16 @@ export default {
       articleBody: "",
       btnDisable: "",
       content: "试着写点什么😘",
-      editorOption: {
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["blockquote", "code-block"],
-            ["link", "image"],
-          ],
-        },
-      },
+      // editorOption: {
+      //   modules: {
+      //     toolbar: [
+      //       ["bold", "italic", "underline", "strike"],
+      //       [{ list: "ordered" }, { list: "bullet" }],
+      //       ["blockquote", "code-block"],
+      //       ["link", "image"],
+      //     ],
+      //   },
+      // },
       articleId: null,
       articleForm: {
         title: null,

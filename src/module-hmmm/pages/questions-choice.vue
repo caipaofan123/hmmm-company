@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <el-card class="box-card">
+
       <headForm @update="updataFn"></headForm>
+
       <el-tabs
         v-model="activeName"
         type="card"

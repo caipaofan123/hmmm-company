@@ -5,7 +5,17 @@
     <el-row>
       <el-col :span="6"
         ><div class="grid-content bg-purple">
-          【题型】: {{ list.questionType == 1 ? "单选" : "多选" }}
+
+
+          【题型】:
+          {{
+            list.questionType === "1"
+              ? "单选"
+              : list.questionType === "2"
+              ? "多选"
+              : "简答"
+          }}
+
         </div></el-col
       >
       <el-col :span="6"
@@ -15,7 +25,17 @@
       >
       <el-col :span="6"
         ><div class="grid-content bg-purple">
-          【难度】: {{ list.difficulty == 1 ? "简单" : "困难" }}
+
+
+          【难度】:
+          {{
+            list.questionType === "1"
+              ? "简单"
+              : list.questionType === "2"
+              ? "一般"
+              : "困难"
+          }}
+
         </div></el-col
       >
       <el-col :span="6"
@@ -48,19 +68,15 @@
         <el-col class="elspan" v-html="list.question"> </el-col>
       </el-row>
 
-      <p>
-        {{ list.questionType == 1 ? "单选" : "多选" }}
-        题选项:(以下选中的选项为正确答案)
-      </p>
+
+
+
+      <p>选题:(以下选中的选项为正确答案)</p>
 
       <div v-for="item in list.options" :key="item.id">
-        <el-checkbox
-          v-model="item.isRight"
-          :true-label="1"
-          :false-label="0"
-          onclick="return false;"
-          >{{ item.title }}</el-checkbox
-        >
+        <el-checkbox></el-checkbox>
+        <span class="checkbox">{{ item.title }}</span>
+
       </div>
     </div>
     <hr />
@@ -70,8 +86,11 @@
         >视频答案预览</el-button
       >
       <div v-if="videoShow">
-        <meta name="referrer" content="no-referrer" />
-        <video :src="list.videoURL" controls autoplay muted loop></video>
+
+        <video :src="list.videoURL" controls autoplay muted loop>
+          您的浏览器版本过低
+        </video>
+
       </div>
     </div>
     <hr />
@@ -93,46 +112,38 @@
 </template>
 <script>
 
-// import { difficulty, questionType } from "@/api/hmmm/constants";
 export default {
-  name: "questionType",
-  data() {
+  data () {
     return {
-      videoShow: false,
-      // questionType,
-    };
+      videoShow: false
+    }
+
   },
   props: {
     visible: {
       type: Boolean,
-      required: true,
+
+      required: true
     },
     list: {
       type: Object,
-      default: [],
-    },
+      required: true
+    }
   },
   components: {},
   methods: {
-    onclose() {
-      this.$emit("update:visible", false);
-      this.videoShow = false;
-    },
-    // 难度类型
-    // difficulty() {
-    //   const style = difficulty.find((item) => {
-    //     return item.value == this.detailList.difficulty;
-    //   });
-    //   return style ? style.label : "未知";
-    // },
+    onclose () {
+      this.$emit('update:visible', false)
+    }
   },
-  created() {},
-  updated() {},
-  mounted() {},
+  created () {},
+  updated () {},
+  mounted () {},
   filters: {},
   computed: {},
-  watch: {},
-};
+  watch: {}
+}
+
 </script>
 <style lang="less" scoped>
 .elrow {

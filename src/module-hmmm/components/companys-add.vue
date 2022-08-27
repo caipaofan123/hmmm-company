@@ -122,8 +122,8 @@ export default {
     },
     // 选省获取到市
     handleProvince: function (e) {
-      this.citySelect.cityDate = citys(e);
-      this.formBase.city = this.citySelect.cityDate[0];
+      this.citySelect.cityDate = citys(e)
+      this.formBase.city = this.citySelect.cityDate[0]
     },
     // 表单提交
     createData() {

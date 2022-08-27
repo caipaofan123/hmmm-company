@@ -2,7 +2,9 @@
   <div class='container'>
     <el-card class="box-card">
   <div slot="header" class="clearfix">
-    <span>试题录入</span>
+
+    <span>试题录入 </span>
+>>>>>>> 9dec0c08831f9b809f198cffa74ecb85ac0ec045
   </div>
   <el-form label-width="100px"
         :rules="rules"

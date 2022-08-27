@@ -114,7 +114,7 @@
         </el-form-item>
 
         <el-form-item label="录入人">
-          <el-select v-model.trim="formBase.creatorID" placeholder="请选择">
+          <el-select v-model="formBase.creatorID" placeholder="请选择">
             <el-option
               v-for="item in userName"
               :key="item.id"
@@ -442,6 +442,8 @@ export default {
       this.formBase.subjectID = ""; //学科
       this.formBase.catalogID = "";
       this.formBase.city = "";
+      this.formBase.creatorID = ""; //录入人
+      this.formBase.shortName = "";
     },
     // 搜索
     async onSearch() {
@@ -455,8 +457,9 @@ export default {
     async removeDanger(row) {
       await remove(row);
       await this.$confirm("确认删除该角色吗");
-      this.questionBank();
+
       this.$message.success("删除成功");
+      this.questionBank();
     },
     async affiliate(id) {
       // console.log(id);
