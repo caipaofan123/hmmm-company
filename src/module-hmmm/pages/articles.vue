@@ -285,6 +285,7 @@ export default {
         articleBody: null,
         videoURL: null,
         id: null,
+        content: "",
       },
       articleTitle: "",
       articleRules: {
