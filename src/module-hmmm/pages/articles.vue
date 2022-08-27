@@ -197,10 +197,14 @@
               v-model="articleForm.title"
             ></el-input>
           </el-form-item>
-          <el-form-item label="文章内容:" prop="content" label-width="120px">
+          <el-form-item
+            label="文章内容:"
+            prop="articleBody"
+            label-width="120px"
+          >
             <Editor
               v-if="addDialog"
-              v-model="articleForm.content"
+              v-model="articleForm.articleBody"
               @blur="blur"
               @input="input"
               ref="EditorOne"
@@ -285,7 +289,6 @@ export default {
         articleBody: null,
         videoURL: null,
         id: null,
-        content: "",
       },
       articleTitle: "",
       articleRules: {
