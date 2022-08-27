@@ -269,16 +269,16 @@ export default {
       articleBody: "",
       btnDisable: "",
       content: "试着写点什么😘",
-      editorOption: {
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["blockquote", "code-block"],
-            ["link", "image"],
-          ],
-        },
-      },
+      // editorOption: {
+      //   modules: {
+      //     toolbar: [
+      //       ["bold", "italic", "underline", "strike"],
+      //       [{ list: "ordered" }, { list: "bullet" }],
+      //       ["blockquote", "code-block"],
+      //       ["link", "image"],
+      //     ],
+      //   },
+      // },
       articleId: null,
       articleForm: {
         title: null,
