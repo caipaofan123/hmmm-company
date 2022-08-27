@@ -435,7 +435,6 @@ export default {
       this.articleId = null;
       this.$refs.articleForm.resetFields();
       this.$refs.EditorOne.deleteText(); //清除富文本编辑器内容
-
       this.addDialog = false;
     },
     videoBtn(scope) {
