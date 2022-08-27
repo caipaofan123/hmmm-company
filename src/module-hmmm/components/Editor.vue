@@ -22,7 +22,6 @@
 
 <script>
 import COS from "cos-js-sdk-v5";
-import hljs from "highlight.js";
 const cos = new COS({
   SecretId: "AKIDfCVYKq79xVotjKn21kDAuOqFTRAdtufd",
   SecretKey: "oPmtlOmtmX5Xr2ye7LK4ZnqhO0SCqGVX",
@@ -39,7 +38,7 @@ export default {
     return {
       content: this.value,
       editorOption: {
-        placeholder: "请在这里输入",
+        placeholder: "",
         modules: {
           toolbar: {
             container: toolbarOptions,
@@ -47,7 +46,6 @@ export default {
               // 自定义图片上传
               image: (value) => {
                 if (value) {
-                  //调用iview图片上传,改为element图片上传方法
                   document
                     .querySelectorAll(".quill-avatar-uploader input")
                     [this.editorIndex].click();
@@ -55,11 +53,6 @@ export default {
                   this.$refs.myQuillEditor.quill.format("image", false);
                 }
               },
-            },
-          },
-          syntax: {
-            highlight: (text) => {
-              return hljs.highlightAuto(text).value; // 这里就是代码高亮需要配置的地方
             },
           },
         },
@@ -85,7 +78,7 @@ export default {
     httpRequest({ file }) {
       cos.putObject(
         {
-          Bucket: "heima-31-1313341705" /* 必须 目标桶 */,
+          Bucket: "heima-31-1313341705" /* 必须 */,
           Region: "ap-shanghai" /* 存储桶所在地域，必须字段 */,
           Key: file.name /* 必须 */,
           StorageClass: "STANDARD",
