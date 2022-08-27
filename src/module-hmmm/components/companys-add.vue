@@ -113,8 +113,8 @@ export default {
       this.dialogFormVisible = true;
     },
     // 弹层隐藏
-    dialogFormH() {
-      this.dialogFormVisible = false;
+    dialogFormH () {
+      this.dialogFormVisible = false
     },
     // 获取省
     getCityData: function () {
