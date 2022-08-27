@@ -2,7 +2,7 @@
   <div class='container'>
     <el-card class="box-card">
   <div slot="header" class="clearfix">
-    <span>试题录入</span>
+    <span>试题录入 </span>
   </div>
   <el-form label-width="100px"
         :rules="rules"
