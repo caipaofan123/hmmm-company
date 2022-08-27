@@ -7,7 +7,7 @@
  * 城市 地区
  */
 
-const datas = [
+ const datas = [
   {
     city: '北京市',
     area: [

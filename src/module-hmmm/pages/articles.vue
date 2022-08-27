@@ -197,10 +197,14 @@
               v-model="articleForm.title"
             ></el-input>
           </el-form-item>
-          <el-form-item label="文章内容:" prop="content" label-width="120px">
+          <el-form-item
+            label="文章内容:"
+            prop="articleBody"
+            label-width="120px"
+          >
             <Editor
               v-if="addDialog"
-              v-model="articleForm.content"
+              v-model="articleForm.articleBody"
               @blur="blur"
               @input="input"
               ref="EditorOne"
@@ -269,16 +273,16 @@ export default {
       articleBody: "",
       btnDisable: "",
       content: "试着写点什么😘",
-      editorOption: {
-        modules: {
-          toolbar: [
-            ["bold", "italic", "underline", "strike"],
-            [{ list: "ordered" }, { list: "bullet" }],
-            ["blockquote", "code-block"],
-            ["link", "image"],
-          ],
-        },
-      },
+      // editorOption: {
+      //   modules: {
+      //     toolbar: [
+      //       ["bold", "italic", "underline", "strike"],
+      //       [{ list: "ordered" }, { list: "bullet" }],
+      //       ["blockquote", "code-block"],
+      //       ["link", "image"],
+      //     ],
+      //   },
+      // },
       articleId: null,
       articleForm: {
         title: null,
@@ -435,7 +439,6 @@ export default {
       this.articleId = null;
       this.$refs.articleForm.resetFields();
       this.$refs.EditorOne.deleteText(); //清除富文本编辑器内容
-
       this.addDialog = false;
     },
     videoBtn(scope) {
