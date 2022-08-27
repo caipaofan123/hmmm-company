@@ -34,7 +34,7 @@ const toolbarOptions = [
   ["code-block", "image", "link"], // 链接、图片、视频-----['link', 'image', 'video']
 ];
 export default {
-  name: "Editor",
+  name: "VueEditor",
   data() {
     return {
       content: this.value,
