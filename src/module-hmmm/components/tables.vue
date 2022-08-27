@@ -180,6 +180,7 @@ export default {
     // 预览
     handleClickPreview (row) {
       this.list = row
+      console.log(this.list)
       this.visible = true
     },
     // 审核
@@ -270,16 +271,16 @@ export default {
       })
     },
     // 题干映射区判断
-    formatQuestionType (row, column, cellValue, index) {
+    formatQuestionType (row, column, index) {
       // const findItem = questionType.find((item) => item.value === cellValue)
       // return findItem ? findItem.value : '简答'
-      return ['单选', '多选', '简答'][index + 1]
+      return ['单选', '多选', '简答'][index - 1]
     },
-    formatDifficultyType (row, column, cellValue, index) {
-      return ['简单', '一般', '困难'][index + 1]
+    formatDifficultyType (row, column, index) {
+      return ['简单', '一般', '困难'][index - 1]
     },
-    formatReleaseType (row, column, cellValue, index) {
-      return ['待发布', '已发布', '已下架'][index + 1]
+    formatReleaseType (row, column, index) {
+      return ['待发布', '已发布', '已下架'][index - 1]
     }
   }
 }

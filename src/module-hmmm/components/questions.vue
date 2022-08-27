@@ -5,7 +5,14 @@
     <el-row>
       <el-col :span="6"
         ><div class="grid-content bg-purple">
-          【题型】: {{ list.questionType }}
+          【题型】:
+          {{
+            list.questionType === "1"
+              ? "单选"
+              : list.questionType === "2"
+              ? "多选"
+              : "简答"
+          }}
         </div></el-col
       >
       <el-col :span="6"
@@ -15,7 +22,14 @@
       >
       <el-col :span="6"
         ><div class="grid-content bg-purple">
-          【难度】: {{ list.difficulty }}
+          【难度】:
+          {{
+            list.questionType === "1"
+              ? "简单"
+              : list.questionType === "2"
+              ? "一般"
+              : "困难"
+          }}
         </div></el-col
       >
       <el-col :span="6"
@@ -98,7 +112,7 @@ export default {
     },
     list: {
       type: Object,
-      default: []
+      required: true
     }
   },
   components: {},

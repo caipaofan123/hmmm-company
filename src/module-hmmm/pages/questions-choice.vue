@@ -1,24 +1,42 @@
 <template>
-  <div class='container'>
+  <div class="container">
     <el-card class="box-card">
       <headForm @update="updataFn"></headForm>
-  <el-tabs v-model="activeName" type="card" @tab-click="handleClickTbas" @choiceApi='choiceApi'>
-    <el-tab-pane label="全部" name="first">
-<tables :tableData="tableData" :pagination="pagination" @choiceApi='choiceApi'></tables>
-    </el-tab-pane>
-    <el-tab-pane label="待审核" name="second">
-<tables :tableData="tableData" :pagination="pagination" @choiceApi='choiceApi'></tables>
-
-    </el-tab-pane>
-    <el-tab-pane label="已审核" name="third">
-<tables :tableData="tableData" :pagination="pagination" @choiceApi='choiceApi'></tables>
-
-    </el-tab-pane>
-    <el-tab-pane label="已拒绝" name="fourth">
-<tables :tableData="tableData" :pagination="pagination" @choiceApi='choiceApi'></tables>
-
-    </el-tab-pane>
-  </el-tabs>
+      <el-tabs
+        v-model="activeName"
+        type="card"
+        @tab-click="handleClickTbas"
+        @choiceApi="choiceApi"
+      >
+        <el-tab-pane label="全部" name="first">
+          <tables
+            :tableData="tableData"
+            :pagination="pagination"
+            @choiceApi="choiceApi"
+          ></tables>
+        </el-tab-pane>
+        <el-tab-pane label="待审核" name="second">
+          <tables
+            :tableData="tableData"
+            :pagination="pagination"
+            @choiceApi="choiceApi"
+          ></tables>
+        </el-tab-pane>
+        <el-tab-pane label="已审核" name="third">
+          <tables
+            :tableData="tableData"
+            :pagination="pagination"
+            @choiceApi="choiceApi"
+          ></tables>
+        </el-tab-pane>
+        <el-tab-pane label="已拒绝" name="fourth">
+          <tables
+            :tableData="tableData"
+            :pagination="pagination"
+            @choiceApi="choiceApi"
+          ></tables>
+        </el-tab-pane>
+      </el-tabs>
     </el-card>
   </div>
 </template>
@@ -56,6 +74,7 @@ export default {
     async choiceApi () {
       const res = await choice(this.pages)
       this.tableData = res.data.items
+      console.log(this.tableData)
       // 一共多少条
       this.total = res.data.counts
       this.paginationPage = res.data.page
@@ -87,7 +106,8 @@ export default {
 }
 </script>
 
-<style scoped lang='less'>
+<style scoped lang="less">
 .box-card {
   margin: 20px;
-  }</style>
+}
+</style>
