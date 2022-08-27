@@ -202,13 +202,13 @@
             prop="articleBody"
             label-width="120px"
           >
-            <Editor
+            <quill-editor
               v-if="addDialog"
               v-model="articleForm.articleBody"
               @blur="blur"
               @input="input"
               ref="EditorOne"
-            ></Editor>
+            ></quill-editor>
           </el-form-item>
           <el-form-item label="视频地址:" prop="videoURL" label-width="120px">
             <el-input
@@ -248,7 +248,7 @@ import {
   updateApi,
 } from "@/api/hmmm/articles";
 import { status } from "@/api/hmmm/constants";
-import Editor from "../components/Editor.vue";
+import quillEditor from "../components/quillEditor.vue";
 
 export default {
   data() {
@@ -306,7 +306,7 @@ export default {
     this.list();
   },
   components: {
-    Editor,
+    quillEditor,
   },
   methods: {
     async list() {
