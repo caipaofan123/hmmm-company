@@ -188,7 +188,7 @@ export default {
       console.log(id);
       this.Answer = true;
       const res = await detail(id);
-      // console.log(res.data);
+     z
       this.list = res.data;
     },
   },
