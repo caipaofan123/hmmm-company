@@ -457,8 +457,9 @@ export default {
     async removeDanger(row) {
       await remove(row);
       await this.$confirm("确认删除该角色吗");
-      this.questionBank();
+
       this.$message.success("删除成功");
+      this.questionBank();
     },
     async affiliate(id) {
       // console.log(id);
